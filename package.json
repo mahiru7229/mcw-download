@@ -1,0 +1,20 @@
+{
+  "name": "mcw-download",
+  "version": "1.0.0",
+  "description": "High-Speed Edge CDN & Hotfix Proxy for MCW Launcher",
+  "scripts": {
+    "dev": "wrangler pages dev public",
+    "deploy": "wrangler pages deploy public --project-name=mcw-download"
+  },
+  "keywords": [
+    "mcw-launcher",
+    "cdn",
+    "cloudflare-pages",
+    "edge-proxy"
+  ],
+  "author": "MCW Team",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  }
+}

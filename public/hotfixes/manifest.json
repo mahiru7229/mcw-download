@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "service": "mcw-hotfix-network",
+  "updated_at": "2026-09-24T00:00:00Z",
+  "active_hotfixes": [
+    {
+      "target_version": "1.7.0",
+      "hotfix_id": 1,
+      "release_tag": "v1.7.0-hf1",
+      "description": "Hotfix template placeholder for v1.7.0 release cycle",
+      "enabled": false,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.0-hf1.zip",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+      "size_bytes": 0,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src.core.update"
+      ]
+    }
+  ]
+}
