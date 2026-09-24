@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-09-24T23:42:00Z",
+  "updated_at": "2026-09-24T23:50:00Z",
   "active_hotfixes": [
     {
       "base_version": "1.7.0",
       "target_version": "1.7.0.1",
       "hotfix_id": 1,
       "release_tag": "v1.7.0.1",
-      "description": "Bản vá thử nghiệm v1.7.0.1 qua Cloudflare Asia Edge CDN",
+      "description": "Sửa lỗi nút làm mới (refresh) trong phần chọn modloader khi tạo instance (bổ sung text hiển thị và biểu tượng chuẩn)",
       "enabled": true,
       "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.0.1.zip",
-      "sha256": "7a8c03c912a10aedd1f8839072c289fb24ad6e3473b124122d261bcb147144ff",
-      "size_bytes": 443,
+      "sha256": "f6e749a8557a989f834c0dc77400e7db84ebc8377e2b5d8d6a593f034595f858",
+      "size_bytes": 4809,
       "clean_on_upgrade": true,
       "target_modules": [
-        "src.hotfix_probe"
+        "src.gui.dialogs.create_instance_dialog"
       ]
     }
   ]
