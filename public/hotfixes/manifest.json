@@ -1,8 +1,23 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-09-24T23:50:00Z",
+  "updated_at": "2026-09-24T18:14:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.7.0",
+      "target_version": "1.7.0.2",
+      "hotfix_id": 2,
+      "release_tag": "v1.7.0.2",
+      "description": "Thu gọn nút Làm mới (Refresh) modloader vừa khít với nội dung chữ và căn chỉnh bố cục gọn gàng",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.0.2.zip",
+      "sha256": "bf9cee42b20400d2454b6d3e73448ef095928ee4aeb3e5338b8eed59449720fd",
+      "size_bytes": 4998,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src.gui.dialogs.create_instance_dialog"
+      ]
+    },
     {
       "base_version": "1.7.0",
       "target_version": "1.7.0.1",
