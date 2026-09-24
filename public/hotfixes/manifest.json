@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-09-24T00:00:00Z",
+  "updated_at": "2026-09-24T23:42:00Z",
   "active_hotfixes": [
     {
       "base_version": "1.7.0",
       "target_version": "1.7.0.1",
       "hotfix_id": 1,
       "release_tag": "v1.7.0.1",
-      "description": "Hotfix template for 1.7.0.1 release cycle",
-      "enabled": false,
+      "description": "Bản vá thử nghiệm v1.7.0.1 qua Cloudflare Asia Edge CDN",
+      "enabled": true,
       "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.0.1.zip",
-      "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-      "size_bytes": 0,
+      "sha256": "7a8c03c912a10aedd1f8839072c289fb24ad6e3473b124122d261bcb147144ff",
+      "size_bytes": 443,
       "clean_on_upgrade": true,
       "target_modules": [
-        "src.core.update"
+        "src.hotfix_probe"
       ]
     }
   ]
