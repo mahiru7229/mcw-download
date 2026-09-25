@@ -11,8 +11,8 @@
       "description": "Hotfix v1.7.1.1: Tăng tốc khởi động (Hardware GPU Caching) & Hiển thị phiên bản Hotfix trên Splash, Home, Settings",
       "enabled": true,
       "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.1.1.zip",
-      "sha256": "67ef70bb910fc774730401d9269280b97d66dec788012324419f98435ff440a7",
-      "size_bytes": 60294,
+      "sha256": "3534d04c3cd8956c9176385ca3efba07d91b21484335cd34e10d70d85a304fa1",
+      "size_bytes": 60314,
       "clean_on_upgrade": true,
       "target_modules": [
         "src/core/hardware/gpu_preference_manager.py",
