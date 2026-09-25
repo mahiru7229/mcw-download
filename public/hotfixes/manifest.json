@@ -1,8 +1,29 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-09-24T18:14:00Z",
+  "updated_at": "2026-09-25T13:58:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.7.1",
+      "target_version": "1.7.1.1",
+      "hotfix_id": 1711,
+      "release_tag": "v1.7.1.1",
+      "description": "Hotfix v1.7.1.1: Tăng tốc khởi động (Hardware GPU Caching) & Hiển thị phiên bản Hotfix trên Splash, Home, Settings",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.7.1.1.zip",
+      "sha256": "67ef70bb910fc774730401d9269280b97d66dec788012324419f98435ff440a7",
+      "size_bytes": 60294,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/core/hardware/gpu_preference_manager.py",
+        "src/gui/config.py",
+        "src/gui/startup_splash.py",
+        "src/gui/pages/home_page.py",
+        "src/gui/pages/launcher_settings_page.py",
+        "src/gui/main_window.py",
+        "src/core/update/hotfix_manager.py"
+      ]
+    },
     {
       "base_version": "1.7.0",
       "target_version": "1.7.0.2",
