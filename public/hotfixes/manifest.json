@@ -1,8 +1,25 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-11T15:35:00Z",
+  "updated_at": "2026-10-11T15:58:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.0",
+      "target_version": "1.8.0.2",
+      "hotfix_id": 1802,
+      "release_tag": "v1.8.0.2",
+      "description": "Hotfix v1.8.0.2: Cho phép bỏ qua toàn bộ lỗi tương thích Forge & phụ thuộc bắt buộc khi bật tuỳ chọn cho phép chạy; Sửa lỗi nạp Forge mods.toml chứa ký tự xuống dòng",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.0.2.zip",
+      "sha256": "5c242ee2b07db284aeae24dd6180976997a9ef1700c82d0661fc3eb291a38ec2",
+      "size_bytes": 20135,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/core/mod/mod_manager.py",
+        "src/core/mod/mod_capability_index.py",
+        "src/core/minecraft/minecraft_executor.py"
+      ]
+    },
     {
       "base_version": "1.8.0",
       "target_version": "1.8.0.1",
