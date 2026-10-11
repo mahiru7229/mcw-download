@@ -1,8 +1,24 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-09-25T13:58:00Z",
+  "updated_at": "2026-10-11T15:35:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.0",
+      "target_version": "1.8.0.1",
+      "hotfix_id": 1801,
+      "release_tag": "v1.8.0.1",
+      "description": "Hotfix v1.8.0.1: Sửa lỗi nạp metadata Forge mods.toml chứa chuỗi ký tự xuống dòng (multiline unescaped newlines) khiến thiếu dependencies khi khởi động",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.0.1.zip",
+      "sha256": "1d7485b7fbce767521918e32bbfae94c1f37498e0f23dcd1a69e75cd75a271e7",
+      "size_bytes": 14238,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/core/mod/mod_manager.py",
+        "src/core/mod/mod_capability_index.py"
+      ]
+    },
     {
       "base_version": "1.7.1",
       "target_version": "1.7.1.1",
