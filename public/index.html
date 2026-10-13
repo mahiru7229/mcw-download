@@ -63,11 +63,6 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .text-gradient-emerald {
-      background: linear-gradient(135deg, #6FE59C 0%, #72D8FF 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
     .cyber-grid {
       background-size: 32px 32px;
       background-image: 
@@ -89,7 +84,7 @@
         </div>
         <div>
           <span class="font-extrabold text-sm text-white tracking-wider font-sans">MCW EDGE CDN</span>
-          <span class="text-[10px] font-mono text-sky-cyan block">CỤM MÁY CHỦ ASIA EDGE (HỒNG KÔNG & SINGAPORE)</span>
+          <span class="text-[10px] font-mono text-sky-cyan block">MÁY CHỦ PHÂN PHỐI FILE CLOUDFLARE EDGE</span>
         </div>
       </div>
 
@@ -108,7 +103,7 @@
   <!-- Main Content -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-12 flex-grow space-y-10">
 
-    <!-- Hero Card with Node Ping Diagnostic -->
+    <!-- Hero Card with Connection Status -->
     <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-white/10 shadow-[0_0_50px_rgba(114,216,255,0.08)] relative overflow-hidden">
       <div class="absolute -right-16 -top-16 w-64 h-64 bg-sky-purple/10 blur-[100px] pointer-events-none rounded-full"></div>
       <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-sky-cyan/10 blur-[100px] pointer-events-none rounded-full"></div>
@@ -117,7 +112,7 @@
         <div class="lg:col-span-7 space-y-4">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-emerald/10 border border-sky-emerald/30 text-sky-emerald text-xs font-mono font-bold">
             <span class="w-2 h-2 rounded-full bg-sky-emerald animate-ping"></span>
-            <span>EDGE NETWORK // OPERATIONAL</span>
+            <span>EDGE NETWORK // ONLINE</span>
           </div>
 
           <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-sans">
@@ -125,71 +120,76 @@
           </h1>
 
           <p class="text-slate-300 text-sm leading-relaxed max-w-xl font-sans">
-            Hạ tầng mạng phân phối Cloudflare Edge với các điểm hiện diện (PoP) tại <strong>Hồng Kông (HKG)</strong> và <strong>Singapore (SIN)</strong>. Tự động bộ nhớ đệm (Edge Cache) các bản phát hành chính thức và tệp vá lỗi Hotfix với độ trễ cực thấp và băng thông tối đa.
+            Hạ tầng phân phối Cloudflare Edge giúp tối ưu tốc độ tải các bản phát hành chính thức từ GitHub Releases và các gói cập nhật Hotfix.
           </p>
         </div>
 
-        <!-- Realtime Diagnostic Widget -->
+        <!-- Connection Status Widget -->
         <div class="lg:col-span-5 bg-base-950/90 rounded-2xl p-5 border border-white/10 font-mono text-xs space-y-3 shadow-inner">
           <div class="flex items-center justify-between pb-2 border-b border-white/10 text-slate-400">
-            <span>CHẨN ĐOÁN KẾT NỐI</span>
-            <span id="ping-badge" class="px-2 py-0.5 rounded bg-sky-emerald/20 text-sky-emerald font-bold text-[10px]">Đang đo...</span>
+            <span>TRẠNG THÁI KẾT NỐI</span>
+            <span id="ping-badge" class="px-2 py-0.5 rounded bg-sky-emerald/20 text-sky-emerald font-bold text-[10px]">Đang kiểm tra...</span>
           </div>
 
           <div class="space-y-2">
             <div class="flex justify-between">
-              <span class="text-slate-400">Điểm Node Kết Nối:</span>
-              <span id="node-colo" class="text-sky-cyan font-bold">Đang phát hiện...</span>
+              <span class="text-slate-400">Điểm Node:</span>
+              <span id="node-colo" class="text-sky-cyan font-bold">Cloudflare Edge</span>
             </div>
             <div class="flex justify-between">
               <span class="text-slate-400">Độ Trễ Phản Hồi:</span>
               <span id="node-latency" class="text-sky-emerald font-bold">-- ms</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-slate-400">Giao Thức Truyền Tải:</span>
-              <span id="node-protocol" class="text-slate-200">HTTP/2 Edge SSL</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="text-slate-400">Cơ Chế Phân Phối:</span>
-              <span class="text-sky-purple font-bold">Resumable Chunk Stream</span>
+              <span class="text-slate-400">Kênh Cập Nhật:</span>
+              <span id="release-sync-status" class="text-slate-200">Đang đồng bộ GitHub...</span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Active Releases Grid (v1.8.0 Stable) -->
+    <!-- Active Releases Grid (Auto-updated from GitHub Releases) -->
     <div class="space-y-5">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2 font-sans">
             <span>📥</span>
-            <span>Bản Phát Hành Chính Thức (v1.8.0 Stable)</span>
+            <span id="release-section-title">Bản Phát Hành Mới Nhất</span>
           </h2>
-          <span class="text-xs font-mono text-slate-400">Tải tệp Portable ZIP giải nén chạy ngay, tối ưu tốc độ qua Edge CDN</span>
+          <span class="text-xs font-mono text-slate-400" id="release-meta-text">Tự động đồng bộ từ GitHub Releases</span>
         </div>
-        <span class="text-xs font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sky-cyan font-semibold">
-          CACHE TTL: 30 NGÀY
+        <span id="release-tag-badge" class="text-xs font-mono px-3 py-1 rounded-full bg-white/5 border border-white/10 text-sky-cyan font-semibold">
+          Đang tải...
         </span>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
         <!-- Windows Archive (ZIP) -->
         <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
           <div class="space-y-2">
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-cyan/15 text-sky-cyan font-bold">WINDOWS X64 // PORTABLE ZIP</span>
             <h3 class="font-bold text-white text-base font-sans">Bản Windows x64 (.zip)</h3>
-            <p class="text-xs text-slate-400 font-mono truncate" title="MCW-Launcher-v1.8.0-windows-x64.zip">MCW-Launcher-v1.8.0-windows-x64.zip</p>
-            <p class="text-xs text-slate-300 font-sans leading-relaxed">Gói đầy đủ tệp thực thi độc lập và tài nguyên, giải nén dùng ngay không cần cài đặt.</p>
+            <p id="win-filename" class="text-xs text-slate-400 font-mono truncate">MCW-Launcher-windows-x64.zip</p>
+            <p class="text-xs text-slate-300 font-sans leading-relaxed">Tệp nén chạy ngay, không cần cài đặt. Tương thích Windows 10 & 11.</p>
           </div>
           <div class="pt-4 mt-4 border-t border-white/10 space-y-2">
             <a
-              href="/releases/v1.8.0/MCW-Launcher-v1.8.0-windows-x64.zip"
+              id="win-cdn-btn"
+              href="https://github.com/mahiru7229/mcw-launcher/releases"
               class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-sky-cyan to-sky-purple text-base-950 flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(114,216,255,0.35)] transition-all"
             >
-              <span>⚡ Tải Xuống (70.9 MB)</span>
+              <span id="win-btn-text">⚡ Tải Xuống (Edge CDN)</span>
             </a>
-            <div class="text-[10px] font-mono text-slate-500 text-center">SHA-256: cd15876ca381d2d70f4ba7bb5446caf3973e6db9...</div>
+            <a
+              id="win-github-btn"
+              href="https://github.com/mahiru7229/mcw-launcher/releases"
+              target="_blank"
+              rel="noreferrer"
+              class="w-full py-2 rounded-xl text-center text-xs font-mono text-slate-400 hover:text-white bg-base-900 border border-white/5 transition-all block"
+            >
+              GitHub Mirror ↗
+            </a>
           </div>
         </div>
 
@@ -198,56 +198,47 @@
           <div class="space-y-2">
             <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-purple/15 text-sky-purple font-bold">LINUX X64 // PORTABLE ZIP</span>
             <h3 class="font-bold text-white text-base font-sans">Bản Linux x64 (.zip)</h3>
-            <p class="text-xs text-slate-400 font-mono truncate" title="MCW-Launcher-v1.8.0-linux-x64.zip">MCW-Launcher-v1.8.0-linux-x64.zip</p>
+            <p id="linux-filename" class="text-xs text-slate-400 font-mono truncate">MCW-Launcher-linux-x64.zip</p>
             <p class="text-xs text-slate-300 font-sans leading-relaxed">Tệp thực thi độc lập cho Ubuntu, Debian, Fedora, Arch Linux (glibc 2.35+).</p>
           </div>
           <div class="pt-4 mt-4 border-t border-white/10 space-y-2">
             <a
-              href="/releases/v1.8.0/MCW-Launcher-v1.8.0-linux-x64.zip"
+              id="linux-cdn-btn"
+              href="https://github.com/mahiru7229/mcw-launcher/releases"
               class="w-full py-3 rounded-xl font-bold text-xs bg-gradient-to-r from-sky-purple to-sky-pink text-base-950 flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(240,167,216,0.35)] transition-all"
             >
-              <span>⚡ Tải Xuống (111.1 MB)</span>
+              <span id="linux-btn-text">⚡ Tải Xuống (Edge CDN)</span>
             </a>
-            <div class="text-[10px] font-mono text-slate-500 text-center">SHA-256: d5c10de4541da04872ecddeb16c1caed910cf3ce...</div>
-          </div>
-        </div>
-
-        <!-- Python Core Wheel -->
-        <div class="glass-panel glass-panel-hover rounded-2xl p-5 border border-white/10 flex flex-col justify-between">
-          <div class="space-y-2">
-            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-emerald/15 text-sky-emerald font-bold">PYTHON CORE // WHEEL</span>
-            <h3 class="font-bold text-white text-base font-sans">mcw-core Headless (.whl)</h3>
-            <p class="text-xs text-slate-400 font-mono truncate" title="mcw_core-1.8.0-py3-none-any.whl">mcw_core-1.8.0-py3-none-any.whl</p>
-            <p class="text-xs text-slate-300 font-sans leading-relaxed">Thư viện Python Core & JSON-RPC 2.0 Server độc lập cho dev bot, headless server và tự động hóa.</p>
-          </div>
-          <div class="pt-4 mt-4 border-t border-white/10 space-y-2">
             <a
-              href="/releases/v1.8.0/mcw_core-1.8.0-py3-none-any.whl"
-              class="w-full py-3 rounded-xl font-bold text-xs bg-base-800 hover:bg-base-750 text-white border border-white/10 flex items-center justify-center gap-2 transition-all"
+              id="linux-github-btn"
+              href="https://github.com/mahiru7229/mcw-launcher/releases"
+              target="_blank"
+              rel="noreferrer"
+              class="w-full py-2 rounded-xl text-center text-xs font-mono text-slate-400 hover:text-white bg-base-900 border border-white/5 transition-all block"
             >
-              <span>⚡ Tải Xuống (733 KB)</span>
+              GitHub Mirror ↗
             </a>
-            <div class="text-[10px] font-mono text-slate-500 text-center">Cài qua pip: pip install mcw_core</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Hotfix Channel Section (v1.7.1.1 Live) -->
-    <div class="glass-panel rounded-2xl p-6 border border-white/10 space-y-4">
+    <!-- Hotfix Channel Section (Dynamically loaded from manifest.json) -->
+    <div id="hotfix-section" class="glass-panel rounded-2xl p-6 border border-white/10 space-y-4">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
         <div>
           <div class="inline-flex items-center gap-2 text-xs font-mono font-bold text-sky-emerald">
-            <span>✦ KÊNH CẬP NHẬT HOTFIX EDGE // CHU KỲ v1.7.1</span>
+            <span>✦ KÊNH CẬP NHẬT HOTFIX EDGE</span>
           </div>
-          <h3 class="text-lg font-bold text-white font-sans mt-0.5">Bản Vá Vi Mô Khẩn Cấp Trực Tuyến (v1.7.1.1 Live)</h3>
+          <h3 id="hotfix-title" class="text-lg font-bold text-white font-sans mt-0.5">Bản Vá Vi Mô Trực Tuyến</h3>
         </div>
         <div class="flex items-center gap-2">
           <a
-            href="/hotfixes/v1.7.1.1.zip"
+            id="hotfix-download-btn"
+            href="/hotfixes/manifest.json"
             class="px-3 py-1.5 rounded-lg bg-sky-emerald/15 border border-sky-emerald/30 text-sky-emerald hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all"
           >
-            <span>Tải patch v1.7.1.1 (60.3 KB)</span>
+            <span id="hotfix-btn-text">Tải patch</span>
             <span>↓</span>
           </a>
           <a
@@ -261,13 +252,13 @@
         </div>
       </div>
 
-      <p class="text-xs text-slate-300 leading-relaxed font-sans">
-        Cơ chế phân phối cho phép Launcher v1.7+ tự động tải và áp dụng các bản vá logic khẩn cấp chỉ vài chục kilobyte mà không cần biên dịch hay tải lại tệp nén 70.9MB. Manifest được cập nhật thời gian thực trên Cloudflare Edge với chữ ký số SHA-256 fail-closed chống can thiệp.
+      <p id="hotfix-description" class="text-xs text-slate-300 leading-relaxed font-sans">
+        Cơ chế phân phối cho phép Launcher tự động áp dụng các bản vá logic gọn nhẹ trực tiếp qua Cloudflare Edge.
       </p>
 
       <div class="p-3.5 rounded-xl bg-base-950/80 border border-white/10 font-mono text-xs text-slate-400 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-        <span class="text-sky-emerald">✦ Trạng thái Manifest: SẴN SÀNG KẾT NỐI (v1.7.1.1 Hoạt động)</span>
-        <span class="text-slate-400 select-all">SHA-256: 3534d04c3cd8956c9176385ca3efba07d91b21484335cd34e10d70d85a304fa1</span>
+        <span id="hotfix-status" class="text-sky-emerald">✦ Trạng thái Manifest: Đang đồng bộ...</span>
+        <span id="hotfix-target" class="text-slate-400">Phiên bản áp dụng: Đang đọc...</span>
       </div>
     </div>
 
@@ -283,12 +274,12 @@
         <div class="flex items-center gap-3">
           <span class="px-2 py-0.5 rounded bg-sky-cyan/20 text-sky-cyan font-bold">GET</span>
           <span class="text-white">/hotfixes/manifest.json</span>
-          <span class="text-slate-400 hidden sm:inline">— Kênh định tuyến manifest hotfix cho v1.7+</span>
+          <span class="text-slate-400 hidden sm:inline">— Kênh định tuyến manifest hotfix tự động</span>
         </div>
         <div class="flex items-center gap-3">
           <span class="px-2 py-0.5 rounded bg-sky-purple/20 text-sky-purple font-bold">GET</span>
           <span class="text-white">/health</span>
-          <span class="text-slate-400 hidden sm:inline">— Kiểm tra trạng thái PoP, GeoIP và độ trễ</span>
+          <span class="text-slate-400 hidden sm:inline">— Kiểm tra trạng thái PoP và kết nối</span>
         </div>
       </div>
     </div>
@@ -300,6 +291,13 @@
   </footer>
 
   <script>
+    function formatBytes(bytes) {
+      if (!bytes || bytes <= 0) return '';
+      const mb = bytes / (1024 * 1024);
+      if (mb >= 1) return mb.toFixed(1) + ' MB';
+      return (bytes / 1024).toFixed(1) + ' KB';
+    }
+
     async function checkHealth() {
       const startTime = performance.now();
       try {
@@ -307,23 +305,90 @@
         const latency = Math.round(performance.now() - startTime);
         if (res.ok) {
           const data = await res.json();
-          const colo = data.edge?.colo || 'HKG';
-          const city = data.edge?.city || 'Hong Kong';
-          const country = data.edge?.country || 'HK';
+          const colo = data.edge?.colo || 'Edge';
+          const city = data.edge?.city || '';
+          const country = data.edge?.country || '';
+          const location = [colo, city, country].filter(Boolean).join(' - ');
 
-          document.getElementById('node-colo').textContent = `${colo} (${city}, ${country})`;
+          document.getElementById('node-colo').textContent = location || 'Cloudflare Edge';
           document.getElementById('node-latency').textContent = `${latency} ms`;
           document.getElementById('ping-badge').textContent = 'ONLINE';
           document.getElementById('ping-badge').className = 'px-2 py-0.5 rounded bg-sky-emerald/20 text-sky-emerald font-bold text-[10px]';
         }
       } catch (e) {
-        document.getElementById('node-colo').textContent = 'Asia Edge (HKG / SIN)';
-        document.getElementById('node-latency').textContent = '18 ms';
+        document.getElementById('node-colo').textContent = 'Cloudflare Edge';
+        document.getElementById('node-latency').textContent = 'Online';
         document.getElementById('ping-badge').textContent = 'ONLINE';
-        document.getElementById('ping-badge').className = 'px-2 py-0.5 rounded bg-sky-emerald/20 text-sky-emerald font-bold text-[10px]';
       }
     }
+
+    async function loadLatestRelease() {
+      try {
+        const res = await fetch('https://api.github.com/repos/mahiru7229/mcw-launcher/releases');
+        if (!res.ok) throw new Error('API request failed');
+        const releases = await res.json();
+        if (!Array.isArray(releases) || releases.length === 0) return;
+
+        const latest = releases[0];
+        const tag = latest.tag_name || 'v1.8.0';
+        const isPre = latest.prerelease ? ' (Pre-release)' : '';
+
+        document.getElementById('release-section-title').textContent = `Bản Phát Hành Mới Nhất (${tag}${isPre})`;
+        document.getElementById('release-tag-badge').textContent = `${tag}`;
+        document.getElementById('release-sync-status').textContent = `Đã đồng bộ ${tag}`;
+
+        const assets = latest.assets || [];
+        const winAsset = assets.find(a => a.name.toLowerCase().includes('windows-x64.zip'));
+        const linuxAsset = assets.find(a => a.name.toLowerCase().includes('linux-x64.zip'));
+
+        if (winAsset) {
+          document.getElementById('win-filename').textContent = winAsset.name;
+          document.getElementById('win-cdn-btn').href = `/releases/${tag}/${winAsset.name}`;
+          document.getElementById('win-github-btn').href = winAsset.browser_download_url;
+          const sizeStr = formatBytes(winAsset.size);
+          document.getElementById('win-btn-text').textContent = sizeStr ? `⚡ Tải Xuống (${sizeStr})` : '⚡ Tải Xuống (Edge CDN)';
+        }
+
+        if (linuxAsset) {
+          document.getElementById('linux-filename').textContent = linuxAsset.name;
+          document.getElementById('linux-cdn-btn').href = `/releases/${tag}/${linuxAsset.name}`;
+          document.getElementById('linux-github-btn').href = linuxAsset.browser_download_url;
+          const sizeStr = formatBytes(linuxAsset.size);
+          document.getElementById('linux-btn-text').textContent = sizeStr ? `⚡ Tải Xuống (${sizeStr})` : '⚡ Tải Xuống (Edge CDN)';
+        }
+      } catch (err) {
+        console.warn('Could not load releases from GitHub:', err);
+        document.getElementById('release-sync-status').textContent = 'Sẵn sàng kết nối';
+      }
+    }
+
+    async function loadHotfixes() {
+      try {
+        const res = await fetch('/hotfixes/manifest.json');
+        if (!res.ok) return;
+        const manifest = await res.json();
+        const active = manifest.active_hotfixes || [];
+        if (active.length === 0) return;
+
+        const latest = active[0];
+        document.getElementById('hotfix-title').textContent = `Bản Vá Hotfix ${latest.release_tag || ''}`;
+        document.getElementById('hotfix-description').textContent = latest.description || 'Bản vá vi mô khẩn cấp.';
+        document.getElementById('hotfix-status').textContent = `✦ Trạng thái Manifest: SẴN SÀNG (${latest.release_tag || 'Live'})`;
+        document.getElementById('hotfix-target').textContent = `Áp dụng cho bản: ${latest.base_version || '1.8.x'}`;
+        
+        if (latest.download_url) {
+          document.getElementById('hotfix-download-btn').href = latest.download_url;
+          const sizeKb = latest.size_bytes ? ` (${(latest.size_bytes / 1024).toFixed(1)} KB)` : '';
+          document.getElementById('hotfix-btn-text').textContent = `Tải patch ${latest.release_tag || ''}${sizeKb}`;
+        }
+      } catch (e) {
+        console.warn('Could not load hotfix manifest:', e);
+      }
+    }
+
     checkHealth();
+    loadLatestRelease();
+    loadHotfixes();
   </script>
 </body>
 </html>
