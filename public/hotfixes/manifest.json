@@ -1,8 +1,24 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-13T13:10:00Z",
+  "updated_at": "2026-10-13T19:28:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.1",
+      "target_version": "1.8.1.1",
+      "hotfix_id": 1811,
+      "release_tag": "v1.8.1.1",
+      "description": "Hotfix v1.8.1.1: Bổ sung thanh cuộn ngang và cuộn dọc toàn trang cho Instance Workspace, hiển thị trọn vẹn thông tin và thanh công cụ",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.1.1.zip",
+      "sha256": "8e554083b66607bc2914bea577c5001c2ab47936470291c7c8f465c77934e483",
+      "size_bytes": 13300,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/gui/pages/base_page.py",
+        "src/gui/pages/instance_workspace_page.py"
+      ]
+    },
     {
       "base_version": "1.8.0",
       "target_version": "1.8.0.3",
