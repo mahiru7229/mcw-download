@@ -1,8 +1,28 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-11T15:58:00Z",
+  "updated_at": "2026-10-13T13:10:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.0",
+      "target_version": "1.8.0.3",
+      "hotfix_id": 1803,
+      "release_tag": "v1.8.0.3",
+      "description": "Hotfix v1.8.0.3: Tự động nạp lại các module hotfix bị cache sớm trong bộ nhớ (sys.modules poisoning) và bỏ qua toàn bộ lỗi dependency khi bật Cho phép chạy",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.0.3.zip",
+      "sha256": "1b72469808a8d1d3b57eb9f9a43e5c0c333596ab80697ff63e778deaae7823f1",
+      "size_bytes": 40553,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/gui/application.py",
+        "src/core/minecraft/minecraft_executor.py",
+        "src/core/mod/modpack_dependency_resolver.py",
+        "src/core/mod/mod_manager.py",
+        "src/core/mod/mod_capability_index.py",
+        "src/core/update/hotfix_manager.py"
+      ]
+    },
     {
       "base_version": "1.8.0",
       "target_version": "1.8.0.2",
