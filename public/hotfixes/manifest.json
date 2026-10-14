@@ -1,8 +1,27 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-14T10:13:00Z",
+  "updated_at": "2026-10-14T10:45:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.1",
+      "target_version": "1.8.1.3",
+      "hotfix_id": 1813,
+      "release_tag": "v1.8.1.3",
+      "description": "Hotfix v1.8.1.3: Sửa triệt để lỗi nút Multiplayer bị vô hiệu hoá trên 1.16.4 và 1.16.5 cho tài khoản Offline; Dynamic loader ArgumentBuilder & LauncherManager",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.1.3.zip",
+      "sha256": "ebb201a242129db1c16f30f4cbe70a9304563a99f59ad1e5ab5aaa559ebddfe2",
+      "size_bytes": 22482,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/gui/pages/base_page.py",
+        "src/gui/pages/instance_workspace_page.py",
+        "src/core/minecraft/argument_builder.py",
+        "src/core/minecraft/launcher_manager.py",
+        "src/core/minecraft/minecraft_executor.py"
+      ]
+    },
     {
       "base_version": "1.8.1",
       "target_version": "1.8.1.2",
