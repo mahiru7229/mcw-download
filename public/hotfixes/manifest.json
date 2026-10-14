@@ -1,8 +1,25 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-13T19:28:00Z",
+  "updated_at": "2026-10-14T10:13:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.1",
+      "target_version": "1.8.1.2",
+      "hotfix_id": 1812,
+      "release_tag": "v1.8.1.2",
+      "description": "Hotfix v1.8.1.2: Tự động mở khoá nút Multiplayer cho tài khoản Offline trên Minecraft 1.16.4 và 1.16.5; Bổ sung thanh cuộn toàn trang Instance Workspace",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.1.2.zip",
+      "sha256": "af75afdf78295cf02b7ff42f35eee49cbf60eb1cff80369d3a1b0032b50d7636",
+      "size_bytes": 16026,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/gui/pages/base_page.py",
+        "src/gui/pages/instance_workspace_page.py",
+        "src/core/minecraft/argument_builder.py"
+      ]
+    },
     {
       "base_version": "1.8.1",
       "target_version": "1.8.1.1",
