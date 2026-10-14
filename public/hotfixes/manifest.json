@@ -1,8 +1,27 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-14T10:45:00Z",
+  "updated_at": "2026-10-14T16:00:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.1",
+      "target_version": "1.8.1.4",
+      "hotfix_id": 1814,
+      "release_tag": "v1.8.1.4",
+      "description": "Hotfix v1.8.1.4: Khắc phục triệt để lỗi 'The auth server is down for maintenance' khi mở LAN bằng cách giữ nguyên địa chỉ session/auth server chính chủ của Mojang và chỉ chuyển hướng duy nhất services.host",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.1.4.zip",
+      "sha256": "6eda34c435b7159895213766dd043a0cecb58706f12634a1a51640aa5339cee7",
+      "size_bytes": 22498,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/gui/pages/base_page.py",
+        "src/gui/pages/instance_workspace_page.py",
+        "src/core/minecraft/argument_builder.py",
+        "src/core/minecraft/launcher_manager.py",
+        "src/core/minecraft/minecraft_executor.py"
+      ]
+    },
     {
       "base_version": "1.8.1",
       "target_version": "1.8.1.3",
