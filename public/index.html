@@ -490,7 +490,15 @@
         if (!res.ok) return;
         const manifest = await res.json();
         const active = manifest.active_hotfixes || [];
-        if (active.length === 0) return;
+        if (active.length === 0) {
+          document.getElementById('hotfix-title').textContent = 'Hệ Thống Ổn Định';
+          document.getElementById('hotfix-description').textContent = 'Toàn bộ các bản sửa lỗi trước đây đã được tích hợp hoàn chỉnh vào bản phát hành chính thức v1.8.2. Hiện không có bản vá nào cần áp dụng.';
+          document.getElementById('hotfix-status').textContent = '✦ Trạng thái Manifest: ỔN ĐỊNH (v1.8.2)';
+          document.getElementById('hotfix-target').textContent = 'Phiên bản chính thức: v1.8.2';
+          const dlBtn = document.getElementById('hotfix-download-btn');
+          if (dlBtn) dlBtn.style.display = 'none';
+          return;
+        }
 
         const latest = active[0];
         document.getElementById('hotfix-title').textContent = `Bản Vá Hotfix ${latest.release_tag || ''}`;
@@ -498,8 +506,10 @@
         document.getElementById('hotfix-status').textContent = `✦ Trạng thái Manifest: SẴN SÀNG (${latest.release_tag || 'Live'})`;
         document.getElementById('hotfix-target').textContent = `Áp dụng cho bản: ${latest.base_version || '1.8.x'}`;
         
-        if (latest.download_url) {
-          document.getElementById('hotfix-download-btn').href = latest.download_url;
+        const dlBtn = document.getElementById('hotfix-download-btn');
+        if (latest.download_url && dlBtn) {
+          dlBtn.style.display = '';
+          dlBtn.href = latest.download_url;
           const sizeKb = latest.size_bytes ? ` (${(latest.size_bytes / 1024).toFixed(1)} KB)` : '';
           document.getElementById('hotfix-btn-text').textContent = `Tải patch ${latest.release_tag || ''}${sizeKb}`;
         }
