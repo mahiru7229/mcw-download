@@ -1,6 +1,39 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-16T07:10:00Z",
-  "active_hotfixes": []
+  "updated_at": "2026-10-19T07:00:00Z",
+  "active_hotfixes": [
+    {
+      "base_version": "1.8.3",
+      "target_version": "1.8.3.1",
+      "hotfix_id": 1831,
+      "release_tag": "v1.8.3.1",
+      "description": "Hotfix v1.8.3.1: Phân phối cập nhật Cloudflare CDN & đa mirror dự phòng GitHub; Sửa lỗi tham số signal lazy dialogs (*args); Hỗ trợ kênh devVersions và sắp xếp version ATLauncher; Tăng tốc tìm kiếm FTB modpacks",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.3.1.zip",
+      "sha256": "aca653498e1cd537885ad4f219820501f89fcafd573693183ca0ccc1fdc7df69",
+      "size_bytes": 77872,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "src/config.py",
+        "src/core/atlauncher/atlauncher_client.py",
+        "src/core/config/launcher_settings_manager.py",
+        "src/core/ftb/ftb_client.py",
+        "src/core/update/__init__.py",
+        "src/core/update/base_release_client.py",
+        "src/core/update/cloudflare_release_client.py",
+        "src/core/update/github_release_client.py",
+        "src/core/update/update_manager.py",
+        "src/gui/controllers/atlauncher_controller.py",
+        "src/gui/controllers/base_controller.py",
+        "src/gui/controllers/ftb_controller.py",
+        "src/gui/controllers/update_controller.py",
+        "src/gui/dialogs/atlauncher_browser_dialog.py",
+        "src/gui/main_window.py",
+        "src/models/update/update_info.py",
+        "mcw_core/api/update/base_release_client.py",
+        "mcw_core/api/update/cloudflare_release_client.py"
+      ]
+    }
+  ]
 }

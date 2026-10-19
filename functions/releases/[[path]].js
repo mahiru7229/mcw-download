@@ -4,13 +4,27 @@
  */
 
 export async function onRequest(context) {
-  const { request, params } = context;
+  const { request, params, next } = context;
   const pathSegments = params.path || [];
 
   // Normalize path segments (strip leading 'download' if present)
   let cleanSegments = [...pathSegments];
   if (cleanSegments[0]?.toLowerCase() === 'download') {
     cleanSegments.shift();
+  }
+
+  // Pass through to static file if available in public/releases/ (e.g. manifest.json)
+  if (cleanSegments.length === 1 && cleanSegments[0].endsWith('.json')) {
+    const response = await next();
+    if (response.status === 200) {
+      const newHeaders = new Headers(response.headers);
+      newHeaders.set('Access-Control-Allow-Origin', '*');
+      newHeaders.set('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=30');
+      return new Response(response.body, {
+        status: response.status,
+        headers: newHeaders
+      });
+    }
   }
 
   if (cleanSegments.length < 2) {

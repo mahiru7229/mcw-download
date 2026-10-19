@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "service": "mcw-releases-network",
+  "updated_at": "2026-10-19T07:00:00Z",
+  "releases": [
+    {
+      "tag_name": "v1.8.3.1",
+      "name": "MCW Launcher v1.8.3.1 Hotfix",
+      "notes": "Hotfix v1.8.3.1: Cloudflare Edge CDN release proxy & dual-source failover, lazy dialog signal arguments fix, ATLauncher beta/dev channel support, and FTB parallel search acceleration.",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.3.1",
+      "published_at": "2026-10-19T07:00:00Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-v1.8.3.1-windows-x64.zip",
+          "size": 77872,
+          "digest": "sha256:aca653498e1cd537885ad4f219820501f89fcafd573693183ca0ccc1fdc7df69",
+          "browser_download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.3.1.zip"
+        }
+      ]
+    },
+    {
+      "tag_name": "v1.8.3",
+      "name": "MCW Launcher v1.8.3",
+      "notes": "Official Release v1.8.3",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.3",
+      "published_at": "2026-10-17T05:00:00Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-v1.8.3-windows-x64.zip",
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.3/MCW-Launcher-v1.8.3-windows-x64.zip"
+        }
+      ]
+    }
+  ]
+}
