@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "service": "mcw-releases-network",
-  "updated_at": "2026-10-19T07:00:00Z",
+  "updated_at": "2026-10-19T07:12:00Z",
   "releases": [
     {
       "tag_name": "v1.8.3.1",
@@ -14,8 +14,8 @@
       "assets": [
         {
           "name": "MCW-Launcher-v1.8.3.1-windows-x64.zip",
-          "size": 77872,
-          "digest": "sha256:aca653498e1cd537885ad4f219820501f89fcafd573693183ca0ccc1fdc7df69",
+          "size": 84880,
+          "digest": "sha256:c984480565efb7882ed3aa965f2c3ba6cd06ab8c23d9747f11968671a62c814f",
           "browser_download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.3.1.zip"
         }
       ]
