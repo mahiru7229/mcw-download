@@ -149,13 +149,13 @@
       </div>
     </div>
 
-    <!-- Active Releases Grid (Auto-updated from GitHub Releases) -->
+    <!-- Active Releases Grid (Auto-updated from CDN & GitHub Releases) -->
     <div class="space-y-5">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 class="text-xl font-bold text-white flex items-center gap-2 font-sans">
             <span>📥</span>
-            <span id="release-section-title">Bản Phát Hành Ổn Định (v1.8.0)</span>
+            <span id="release-section-title">Bản Phát Hành Ổn Định</span>
           </h2>
           <span class="text-xs font-mono text-slate-400" id="release-meta-text">Bản chính thức khuyên dùng cho mọi người chơi Minecraft</span>
         </div>
@@ -185,13 +185,17 @@
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <span id="win-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-cyan/15 text-sky-cyan font-bold">WINDOWS X64 // PORTABLE ZIP</span>
-              <span id="win-tag-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300">v1.8.0</span>
+              <span id="win-tag-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300">...</span>
             </div>
             <h3 class="font-bold text-white text-base font-sans">Bản Windows x64 (.zip)</h3>
-            <p id="win-filename" class="text-xs text-slate-400 font-mono truncate">MCW-Launcher-v1.8.0-windows-x64.zip</p>
+            <p id="win-filename" class="text-xs text-slate-400 font-mono truncate">Đang kiểm tra tệp...</p>
             <p id="win-desc" class="text-xs text-slate-300 font-sans leading-relaxed">Tệp nén chạy ngay, không cần cài đặt. Tương thích Windows 10 & 11.</p>
           </div>
-          <div class="pt-4 mt-4 border-t border-white/10 space-y-2">
+          <div id="win-loading-box" class="py-8 flex flex-col items-center justify-center gap-2 text-xs font-mono text-slate-400">
+            <div class="w-4 h-4 border-2 border-sky-cyan border-t-transparent rounded-full animate-spin"></div>
+            <span>Đang kiểm tra phiên bản mới...</span>
+          </div>
+          <div id="win-actions" style="display: none;" class="pt-4 mt-4 border-t border-white/10 space-y-2">
             <a
               id="win-cdn-btn"
               href="https://github.com/mahiru7229/mcw-launcher/releases"
@@ -225,13 +229,17 @@
           <div class="space-y-2">
             <div class="flex items-center justify-between">
               <span id="linux-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-sky-purple/15 text-sky-purple font-bold">LINUX X64 // PORTABLE ZIP</span>
-              <span id="linux-tag-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300">v1.8.0</span>
+              <span id="linux-tag-badge" class="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-slate-300">...</span>
             </div>
             <h3 class="font-bold text-white text-base font-sans">Bản Linux x64 (.zip)</h3>
-            <p id="linux-filename" class="text-xs text-slate-400 font-mono truncate">MCW-Launcher-v1.8.0-linux-x64.zip</p>
+            <p id="linux-filename" class="text-xs text-slate-400 font-mono truncate">Đang kiểm tra tệp...</p>
             <p id="linux-desc" class="text-xs text-slate-300 font-sans leading-relaxed">Tệp thực thi độc lập cho Ubuntu, Debian, Fedora, Arch Linux (glibc 2.35+).</p>
           </div>
-          <div class="pt-4 mt-4 border-t border-white/10 space-y-2">
+          <div id="linux-loading-box" class="py-8 flex flex-col items-center justify-center gap-2 text-xs font-mono text-slate-400">
+            <div class="w-4 h-4 border-2 border-sky-purple border-t-transparent rounded-full animate-spin"></div>
+            <span>Đang kiểm tra phiên bản mới...</span>
+          </div>
+          <div id="linux-actions" style="display: none;" class="pt-4 mt-4 border-t border-white/10 space-y-2">
             <a
               id="linux-cdn-btn"
               href="https://github.com/mahiru7229/mcw-launcher/releases"
@@ -370,9 +378,20 @@
       const active = (currentChannel === 'beta' && betaRelease) ? betaRelease : (stableRelease || betaRelease);
       if (!active) return;
 
-      const tag = active.tag_name || 'v1.8.0';
+      const tag = active.tag_name || 'v1.8.3';
       const isBeta = active.prerelease;
       const altRelease = isBeta ? stableRelease : betaRelease;
+
+      // Reveal buttons and hide loading placeholders
+      const winLoading = document.getElementById('win-loading-box');
+      const winActions = document.getElementById('win-actions');
+      if (winLoading) winLoading.style.display = 'none';
+      if (winActions) winActions.style.display = '';
+
+      const linuxLoading = document.getElementById('linux-loading-box');
+      const linuxActions = document.getElementById('linux-actions');
+      if (linuxLoading) linuxLoading.style.display = 'none';
+      if (linuxActions) linuxActions.style.display = '';
 
       // Update Section Title & Subtitle
       const titleEl = document.getElementById('release-section-title');
@@ -468,18 +487,53 @@
     }
 
     async function loadLatestRelease() {
-      try {
-        const res = await fetch('https://api.github.com/repos/mahiru7229/mcw-launcher/releases');
-        if (!res.ok) throw new Error('API request failed');
-        const releases = await res.json();
-        if (!Array.isArray(releases) || releases.length === 0) return;
+      let releases = null;
 
+      // 1. Prioritize Cloudflare Edge CDN manifest
+      try {
+        const cdnController = new AbortController();
+        const cdnTimeout = setTimeout(() => cdnController.abort(), 4000);
+        const res = await fetch('/releases/manifest.json', { signal: cdnController.signal });
+        clearTimeout(cdnTimeout);
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : (data.releases || data.active_releases || []);
+          if (Array.isArray(items) && items.length > 0) {
+            releases = items;
+            console.log('[CDN] Loaded release manifest from Cloudflare Edge');
+          }
+        }
+      } catch (cdnErr) {
+        console.warn('[CDN] Cloudflare CDN release lookup failed:', cdnErr);
+      }
+
+      // 2. Fallback to GitHub Releases API
+      if (!releases) {
+        try {
+          const ghController = new AbortController();
+          const ghTimeout = setTimeout(() => ghController.abort(), 5000);
+          const res = await fetch('https://api.github.com/repos/mahiru7229/mcw-launcher/releases', {
+            headers: { 'Accept': 'application/vnd.github.v3+json' },
+            signal: ghController.signal,
+          });
+          clearTimeout(ghTimeout);
+          if (res.ok) {
+            const ghReleases = await res.json();
+            if (Array.isArray(ghReleases) && ghReleases.length > 0) {
+              releases = ghReleases;
+              console.log('[GitHub] Loaded releases fallback from GitHub API');
+            }
+          }
+        } catch (ghErr) {
+          console.warn('[GitHub] Could not load releases from GitHub:', ghErr);
+        }
+      }
+
+      if (releases && releases.length > 0) {
         stableRelease = releases.find(r => !r.prerelease) || releases[0];
         betaRelease = releases.find(r => r.prerelease) || null;
-
         updateDownloadUI();
-      } catch (err) {
-        console.warn('Could not load releases from GitHub:', err);
+      } else {
         document.getElementById('release-sync-status').textContent = 'Sẵn sàng kết nối';
       }
     }
