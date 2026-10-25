@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-25T16:00:00Z",
+  "updated_at": "2026-10-25T16:35:00Z",
   "active_hotfixes": [
     {
       "base_version": "1.8.3",
@@ -11,8 +11,8 @@
       "description": "Hotfix v1.8.3.3: Khắc phục triệt để lỗi kiểm tra cập nhật ('Update check returned an invalid result.'), đồng bộ định danh UpdateInfo, hoàn thiện nạp hotfix và hỗ trợ cập nhật Cloudflare CDN & GitHub.",
       "enabled": true,
       "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.3.3.zip",
-      "sha256": "2f361c94ddcfe5bdab583deeb7bfda43e561291d3ae92d5ea262c3d1b4bf0a0b",
-      "size_bytes": 160852,
+      "sha256": "7d4e53762af1092a481c342bbffd88ffb8c5f71fe2500f7137b503ef8fca0e8a",
+      "size_bytes": 160976,
       "clean_on_upgrade": true,
       "target_modules": [
         "mcw_core/api/models/update/update_info.py",
