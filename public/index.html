@@ -486,6 +486,29 @@
       updateDownloadUI();
     }
 
+    function isNewer(tagA, tagB) {
+      if (!tagA) return false;
+      if (!tagB) return true;
+      const cleanA = String(tagA).replace(/^v/, '');
+      const cleanB = String(tagB).replace(/^v/, '');
+      const parse = (v) => {
+        const [main, pre] = v.split('-');
+        const parts = (main || '').split('.').map(n => parseInt(n, 10) || 0);
+        return { parts, pre: pre || '' };
+      };
+      const pa = parse(cleanA);
+      const pb = parse(cleanB);
+      for (let i = 0; i < Math.max(pa.parts.length, pb.parts.length); i++) {
+        const na = pa.parts[i] || 0;
+        const nb = pb.parts[i] || 0;
+        if (na > nb) return true;
+        if (na < nb) return false;
+      }
+      if (!pa.pre && pb.pre) return true;
+      if (pa.pre && !pb.pre) return false;
+      return pa.pre.localeCompare(pb.pre, undefined, { numeric: true }) > 0;
+    }
+
     async function loadLatestRelease() {
       let releases = null;
 
@@ -507,8 +530,12 @@
         console.warn('[CDN] Cloudflare CDN release lookup failed:', cdnErr);
       }
 
-      // 2. Fallback to GitHub Releases API
-      if (!releases) {
+      // Check if CDN has the latest known releases (v1.8.4-beta.1)
+      const cdnBeta = releases ? releases.find(r => r.prerelease) : null;
+      const needsGitHubFallback = !releases || !cdnBeta || isNewer('v1.8.4-beta.1', cdnBeta.tag_name);
+
+      // 2. Fallback to GitHub Releases API if CDN is missing the newest release
+      if (needsGitHubFallback) {
         try {
           const ghController = new AbortController();
           const ghTimeout = setTimeout(() => ghController.abort(), 5000);
@@ -520,8 +547,16 @@
           if (res.ok) {
             const ghReleases = await res.json();
             if (Array.isArray(ghReleases) && ghReleases.length > 0) {
-              releases = ghReleases;
-              console.log('[GitHub] Loaded releases fallback from GitHub API');
+              if (!releases) {
+                releases = ghReleases;
+              } else {
+                // Merge newer releases from GitHub if CDN manifest was slightly stale
+                const ghBeta = ghReleases.find(r => r.prerelease);
+                if (ghBeta && (!cdnBeta || isNewer(ghBeta.tag_name, cdnBeta.tag_name))) {
+                  releases = [ghBeta, ...releases.filter(r => !r.prerelease)];
+                }
+              }
+              console.log('[GitHub] Loaded or merged latest releases from GitHub API');
             }
           }
         } catch (ghErr) {
