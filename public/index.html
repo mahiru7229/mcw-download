@@ -171,6 +171,7 @@
           </button>
           <button
             id="tab-beta"
+            style="display: none;"
             onclick="switchChannel('beta')"
             class="px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white"
           >
@@ -268,7 +269,6 @@
           </div>
         </div>
       </div>
-      </div>
     </div>
 
     <!-- Hotfix Channel Section (Dynamically loaded from manifest.json) -->
@@ -318,6 +318,11 @@
           <span class="px-2 py-0.5 rounded bg-sky-emerald/20 text-sky-emerald font-bold">GET</span>
           <span class="text-white">/releases/:tag/:filename</span>
           <span class="text-slate-400 hidden sm:inline">— Proxy & Edge Cache tệp release từ GitHub</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="px-2 py-0.5 rounded bg-sky-cyan/20 text-sky-cyan font-bold">GET</span>
+          <span class="text-white">/releases/manifest.json</span>
+          <span class="text-slate-400 hidden sm:inline">— Kênh đồng bộ manifest phát hành tự động tại Edge</span>
         </div>
         <div class="flex items-center gap-3">
           <span class="px-2 py-0.5 rounded bg-sky-cyan/20 text-sky-cyan font-bold">GET</span>
@@ -374,12 +379,32 @@
     let betaRelease = null;
     let currentChannel = 'stable';
 
+    function findPlatformZipAsset(assets, platformSuffix) {
+      if (!Array.isArray(assets)) return null;
+      const suffix = platformSuffix.toLowerCase();
+      return assets.find(a => {
+        const name = String(a?.name || '').toLowerCase();
+        return name.endsWith(suffix) && !name.includes('legacy') && !name.includes('bridge');
+      }) || null;
+    }
+
+    function resolveGitHubDownloadUrl(asset, tag, filename) {
+      if (Array.isArray(asset?.mirror_urls)) {
+        const ghMirror = asset.mirror_urls.find(u => typeof u === 'string' && u.includes('github.com/'));
+        if (ghMirror) return ghMirror;
+      }
+      if (typeof asset?.browser_download_url === 'string' && asset.browser_download_url.includes('github.com/')) {
+        return asset.browser_download_url;
+      }
+      return `https://github.com/mahiru7229/mcw-launcher/releases/download/${tag}/${filename}`;
+    }
+
     function updateDownloadUI() {
       const active = (currentChannel === 'beta' && betaRelease) ? betaRelease : (stableRelease || betaRelease);
       if (!active) return;
 
-      const tag = active.tag_name || 'v1.8.3';
-      const isBeta = active.prerelease;
+      const tag = active.tag_name || 'v1.8.4';
+      const isBeta = Boolean(active.prerelease);
       const altRelease = isBeta ? stableRelease : betaRelease;
 
       // Reveal buttons and hide loading placeholders
@@ -398,16 +423,17 @@
       const metaEl = document.getElementById('release-meta-text');
       if (isBeta) {
         titleEl.textContent = `Bản Phát Hành Thử Nghiệm (${tag})`;
-        metaEl.textContent = 'Bản Beta thử nghiệm tính năng mới (Khởi chạy Prism Launcher & Schema 20)';
+        metaEl.textContent = 'Bản Beta thử nghiệm tính năng mới dành cho người dùng muốn trải nghiệm sớm';
       } else {
         titleEl.textContent = `Bản Phát Hành Ổn Định (${tag})`;
         metaEl.textContent = 'Bản chính thức khuyên dùng cho mọi người chơi Minecraft';
       }
 
-      // Update Channel Tabs styling
+      // Update Channel Tabs styling & visibility
       const tabStable = document.getElementById('tab-stable');
       const tabBeta = document.getElementById('tab-beta');
       if (tabStable && tabBeta) {
+        tabBeta.style.display = betaRelease ? '' : 'none';
         if (isBeta) {
           tabStable.className = 'px-3 py-1.5 rounded-lg font-medium transition-all text-slate-400 hover:text-white';
           tabBeta.className = 'px-3 py-1.5 rounded-lg font-bold transition-all bg-amber-400/20 text-amber-400 border border-amber-400/40 shadow-sm';
@@ -423,31 +449,33 @@
       document.getElementById('release-sync-status').textContent = `Đã đồng bộ ${tag}`;
 
       // Update Windows card
-      const winAsset = (active.assets || []).find(a => a.name.toLowerCase().includes('windows-x64.zip'));
+      const winAsset = findPlatformZipAsset(active.assets, '-windows-x64.zip');
+      const winFallbackName = `MCW-Launcher-${tag}-windows-x64.zip`;
       if (winAsset) {
         document.getElementById('win-filename').textContent = winAsset.name;
         document.getElementById('win-cdn-btn').href = `/releases/${tag}/${winAsset.name}`;
-        document.getElementById('win-github-btn').href = winAsset.browser_download_url;
+        document.getElementById('win-github-btn').href = resolveGitHubDownloadUrl(winAsset, tag, winAsset.name);
         const sizeStr = formatBytes(winAsset.size);
         document.getElementById('win-btn-text').textContent = sizeStr ? `⚡ Tải ${tag} (${sizeStr})` : `⚡ Tải ${tag}`;
       } else {
-        document.getElementById('win-filename').textContent = `MCW-Launcher-${tag}-windows-x64.zip`;
-        document.getElementById('win-cdn-btn').href = `/releases/${tag}/MCW-Launcher-${tag}-windows-x64.zip`;
+        document.getElementById('win-filename').textContent = winFallbackName;
+        document.getElementById('win-cdn-btn').href = `/releases/${tag}/${winFallbackName}`;
         document.getElementById('win-github-btn').href = active.html_url || `https://github.com/mahiru7229/mcw-launcher/releases/tag/${tag}`;
         document.getElementById('win-btn-text').textContent = `⚡ Tải ${tag}`;
       }
 
       // Update Linux card
-      const linuxAsset = (active.assets || []).find(a => a.name.toLowerCase().includes('linux-x64.zip'));
+      const linuxAsset = findPlatformZipAsset(active.assets, '-linux-x64.zip');
+      const linuxFallbackName = `MCW-Launcher-${tag}-linux-x64.zip`;
       if (linuxAsset) {
         document.getElementById('linux-filename').textContent = linuxAsset.name;
         document.getElementById('linux-cdn-btn').href = `/releases/${tag}/${linuxAsset.name}`;
-        document.getElementById('linux-github-btn').href = linuxAsset.browser_download_url;
+        document.getElementById('linux-github-btn').href = resolveGitHubDownloadUrl(linuxAsset, tag, linuxAsset.name);
         const sizeStr = formatBytes(linuxAsset.size);
         document.getElementById('linux-btn-text').textContent = sizeStr ? `⚡ Tải ${tag} (${sizeStr})` : `⚡ Tải ${tag}`;
       } else {
-        document.getElementById('linux-filename').textContent = `MCW-Launcher-${tag}-linux-x64.zip`;
-        document.getElementById('linux-cdn-btn').href = `/releases/${tag}/MCW-Launcher-${tag}-linux-x64.zip`;
+        document.getElementById('linux-filename').textContent = linuxFallbackName;
+        document.getElementById('linux-cdn-btn').href = `/releases/${tag}/${linuxFallbackName}`;
         document.getElementById('linux-github-btn').href = active.html_url || `https://github.com/mahiru7229/mcw-launcher/releases/tag/${tag}`;
         document.getElementById('linux-btn-text').textContent = `⚡ Tải ${tag}`;
       }
@@ -457,12 +485,19 @@
       const linuxAltBtn = document.getElementById('linux-alt-btn');
       const winAltText = document.getElementById('win-alt-text');
       const linuxAltText = document.getElementById('linux-alt-text');
+      const winGithubBtn = document.getElementById('win-github-btn');
+      const linuxGithubBtn = document.getElementById('linux-github-btn');
 
       if (altRelease) {
+        winAltBtn.style.display = '';
+        linuxAltBtn.style.display = '';
+        if (winGithubBtn) winGithubBtn.classList.remove('col-span-2');
+        if (linuxGithubBtn) linuxGithubBtn.classList.remove('col-span-2');
+
         const altTag = altRelease.tag_name;
         const altIsBeta = altRelease.prerelease;
-        const altWinAsset = (altRelease.assets || []).find(a => a.name.toLowerCase().includes('windows-x64.zip'));
-        const altLinuxAsset = (altRelease.assets || []).find(a => a.name.toLowerCase().includes('linux-x64.zip'));
+        const altWinAsset = findPlatformZipAsset(altRelease.assets, '-windows-x64.zip');
+        const altLinuxAsset = findPlatformZipAsset(altRelease.assets, '-linux-x64.zip');
 
         if (altIsBeta) {
           winAltText.textContent = `🧪 Tải Beta (${altTag})`;
@@ -478,10 +513,16 @@
 
         winAltBtn.href = altWinAsset ? `/releases/${altTag}/${altWinAsset.name}` : `/releases/${altTag}/MCW-Launcher-${altTag}-windows-x64.zip`;
         linuxAltBtn.href = altLinuxAsset ? `/releases/${altTag}/${altLinuxAsset.name}` : `/releases/${altTag}/MCW-Launcher-${altTag}-linux-x64.zip`;
+      } else {
+        winAltBtn.style.display = 'none';
+        linuxAltBtn.style.display = 'none';
+        if (winGithubBtn) winGithubBtn.classList.add('col-span-2');
+        if (linuxGithubBtn) linuxGithubBtn.classList.add('col-span-2');
       }
     }
 
     function switchChannel(channel) {
+      if (channel === 'beta' && !betaRelease) return;
       currentChannel = channel;
       updateDownloadUI();
     }
@@ -489,12 +530,12 @@
     function isNewer(tagA, tagB) {
       if (!tagA) return false;
       if (!tagB) return true;
-      const cleanA = String(tagA).replace(/^v/, '');
-      const cleanB = String(tagB).replace(/^v/, '');
+      const cleanA = String(tagA).replace(/^v/i, '');
+      const cleanB = String(tagB).replace(/^v/i, '');
       const parse = (v) => {
-        const [main, pre] = v.split('-');
+        const [main, ...preParts] = v.split('-');
         const parts = (main || '').split('.').map(n => parseInt(n, 10) || 0);
-        return { parts, pre: pre || '' };
+        return { parts, pre: preParts.join('-') || '' };
       };
       const pa = parse(cleanA);
       const pb = parse(cleanB);
@@ -510,63 +551,63 @@
     }
 
     async function loadLatestRelease() {
-      let releases = null;
+      const mergedByTag = new Map();
 
-      // 1. Prioritize Cloudflare Edge CDN manifest
+      // 1. Load Cloudflare Edge CDN manifest (Edge-synced with GitHub Releases)
       try {
         const cdnController = new AbortController();
-        const cdnTimeout = setTimeout(() => cdnController.abort(), 4000);
+        const cdnTimeout = setTimeout(() => cdnController.abort(), 4500);
         const res = await fetch('/releases/manifest.json', { signal: cdnController.signal });
         clearTimeout(cdnTimeout);
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : (data.releases || data.active_releases || []);
-          if (Array.isArray(items) && items.length > 0) {
-            releases = items;
-            console.log('[CDN] Loaded release manifest from Cloudflare Edge');
+          for (const item of items) {
+            if (item && item.tag_name && !item.draft) {
+              mergedByTag.set(item.tag_name, item);
+            }
           }
         }
       } catch (cdnErr) {
         console.warn('[CDN] Cloudflare CDN release lookup failed:', cdnErr);
       }
 
-      // Check if CDN has the latest known releases (v1.8.4-beta.1)
-      const cdnBeta = releases ? releases.find(r => r.prerelease) : null;
-      const needsGitHubFallback = !releases || !cdnBeta || isNewer('v1.8.4-beta.1', cdnBeta.tag_name);
-
-      // 2. Fallback to GitHub Releases API if CDN is missing the newest release
-      if (needsGitHubFallback) {
-        try {
-          const ghController = new AbortController();
-          const ghTimeout = setTimeout(() => ghController.abort(), 5000);
-          const res = await fetch('https://api.github.com/repos/mahiru7229/mcw-launcher/releases', {
-            headers: { 'Accept': 'application/vnd.github.v3+json' },
-            signal: ghController.signal,
-          });
-          clearTimeout(ghTimeout);
-          if (res.ok) {
-            const ghReleases = await res.json();
-            if (Array.isArray(ghReleases) && ghReleases.length > 0) {
-              if (!releases) {
-                releases = ghReleases;
-              } else {
-                // Merge newer releases from GitHub if CDN manifest was slightly stale
-                const ghBeta = ghReleases.find(r => r.prerelease);
-                if (ghBeta && (!cdnBeta || isNewer(ghBeta.tag_name, cdnBeta.tag_name))) {
-                  releases = [ghBeta, ...releases.filter(r => !r.prerelease)];
-                }
+      // 2. Also query GitHub Releases API to guarantee latest Stable & Beta are merged
+      try {
+        const ghController = new AbortController();
+        const ghTimeout = setTimeout(() => ghController.abort(), 5000);
+        const res = await fetch('https://api.github.com/repos/mahiru7229/mcw-launcher/releases?per_page=15', {
+          headers: { 'Accept': 'application/vnd.github+json' },
+          signal: ghController.signal,
+        });
+        clearTimeout(ghTimeout);
+        if (res.ok) {
+          const ghReleases = await res.json();
+          if (Array.isArray(ghReleases)) {
+            for (const ghItem of ghReleases) {
+              if (ghItem && ghItem.tag_name && !ghItem.draft && Array.isArray(ghItem.assets) && ghItem.assets.length > 0) {
+                mergedByTag.set(ghItem.tag_name, ghItem);
               }
-              console.log('[GitHub] Loaded or merged latest releases from GitHub API');
             }
           }
-        } catch (ghErr) {
-          console.warn('[GitHub] Could not load releases from GitHub:', ghErr);
         }
+      } catch (ghErr) {
+        console.warn('[GitHub] Could not load releases from GitHub:', ghErr);
       }
 
-      if (releases && releases.length > 0) {
-        stableRelease = releases.find(r => !r.prerelease) || releases[0];
-        betaRelease = releases.find(r => r.prerelease) || null;
+      const sortedReleases = Array.from(mergedByTag.values()).sort((a, b) =>
+        isNewer(a.tag_name, b.tag_name) ? -1 : isNewer(b.tag_name, a.tag_name) ? 1 : 0
+      );
+
+      if (sortedReleases.length > 0) {
+        stableRelease = sortedReleases.find(r => !r.prerelease) || sortedReleases[0];
+        const newestBeta = sortedReleases.find(r => r.prerelease) || null;
+        betaRelease = (newestBeta && (!stableRelease || isNewer(newestBeta.tag_name, stableRelease.tag_name)))
+          ? newestBeta
+          : null;
+        if (!betaRelease && currentChannel === 'beta') {
+          currentChannel = 'stable';
+        }
         updateDownloadUI();
       } else {
         document.getElementById('release-sync-status').textContent = 'Sẵn sàng kết nối';
@@ -579,11 +620,12 @@
         if (!res.ok) return;
         const manifest = await res.json();
         const active = manifest.active_hotfixes || [];
+        const currentStableTag = stableRelease?.tag_name || 'v1.8.4';
         if (active.length === 0) {
           document.getElementById('hotfix-title').textContent = 'Hệ Thống Ổn Định';
-          document.getElementById('hotfix-description').textContent = 'Toàn bộ các bản sửa lỗi trước đây đã được tích hợp hoàn chỉnh vào bản phát hành chính thức v1.8.2. Hiện không có bản vá nào cần áp dụng.';
-          document.getElementById('hotfix-status').textContent = '✦ Trạng thái Manifest: ỔN ĐỊNH (v1.8.2)';
-          document.getElementById('hotfix-target').textContent = 'Phiên bản chính thức: v1.8.2';
+          document.getElementById('hotfix-description').textContent = `Toàn bộ các bản sửa lỗi trước đây đã được tích hợp hoàn chỉnh vào bản phát hành chính thức ${currentStableTag}. Hiện không có bản vá nào cần áp dụng.`;
+          document.getElementById('hotfix-status').textContent = `✦ Trạng thái Manifest: ỔN ĐỊNH (${currentStableTag})`;
+          document.getElementById('hotfix-target').textContent = `Phiên bản chính thức: ${currentStableTag}`;
           const dlBtn = document.getElementById('hotfix-download-btn');
           if (dlBtn) dlBtn.style.display = 'none';
           return;

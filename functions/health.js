@@ -9,7 +9,7 @@ export async function onRequest(context) {
   const data = {
     status: "online",
     service: "mcw-edge-cdn",
-    version: "1.6.1",
+    version: "1.8.4",
     edge: {
       colo: request.cf?.colo || "DEV",
       city: request.cf?.city || "Local",

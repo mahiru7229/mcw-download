@@ -5,6 +5,20 @@
 
 export async function onRequest(context) {
   const { request, params, next } = context;
+
+  // Handle CORS preflight requests
+  if (request.method === 'OPTIONS') {
+    return new Response(null, {
+      status: 204,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, HEAD, OPTIONS',
+        'Access-Control-Allow-Headers': 'Range, Content-Type, Accept',
+        'Access-Control-Max-Age': '86400'
+      }
+    });
+  }
+
   const pathSegments = params.path || [];
   const filename = pathSegments.join('/');
 
@@ -17,7 +31,7 @@ export async function onRequest(context) {
       docs: "https://github.com/mahiru7229/mcw-launcher/blob/main/docs/HOTFIX_SYSTEM.md"
     }, null, 2), {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
         'Access-Control-Allow-Origin': '*'
       }
     });

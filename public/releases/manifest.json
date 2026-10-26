@@ -1,8 +1,51 @@
 {
   "schema_version": 1,
   "service": "mcw-releases-network",
-  "updated_at": "2026-10-25T14:34:02Z",
+  "updated_at": "2026-10-26T16:00:00Z",
   "releases": [
+    {
+      "tag_name": "v1.8.4",
+      "name": "MCW Launcher v1.8.4",
+      "notes": "Bản phát hành chính thức MCW Launcher v1.8.4: Hỗ trợ 4 Mod Loader (Fabric, Quilt, Forge, NeoForge), khởi chạy trực tiếp theo phong cách Prism Launcher, trình duyệt Modpack FTB & ATLauncher, nâng cấp Schema 20 và cập nhật qua Cloudflare Edge CDN.",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.4",
+      "published_at": "2026-10-26T16:00:00Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-v1.8.4-windows-x64.zip",
+          "size": 83250000,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.4/MCW-Launcher-v1.8.4-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.4/MCW-Launcher-v1.8.4-windows-x64.zip"
+          ]
+        },
+        {
+          "name": "MCW-Launcher-v1.8.4-windows-x64.zip.sha256",
+          "size": 102,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.4/MCW-Launcher-v1.8.4-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.4/MCW-Launcher-v1.8.4-windows-x64.zip.sha256"
+          ]
+        },
+        {
+          "name": "MCW-Launcher-v1.8.4-linux-x64.zip",
+          "size": 127050000,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.4/MCW-Launcher-v1.8.4-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.4/MCW-Launcher-v1.8.4-linux-x64.zip"
+          ]
+        },
+        {
+          "name": "MCW-Launcher-v1.8.4-linux-x64.zip.sha256",
+          "size": 100,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.4/MCW-Launcher-v1.8.4-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.4/MCW-Launcher-v1.8.4-linux-x64.zip.sha256"
+          ]
+        }
+      ]
+    },
     {
       "tag_name": "v1.8.4-beta.1",
       "name": "MCW Launcher v1.8.4-beta.1",
@@ -71,33 +114,6 @@
           "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.3/MCW-Launcher-v1.8.3-linux-x64.zip",
           "mirror_urls": [
             "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.3/MCW-Launcher-v1.8.3-linux-x64.zip"
-          ]
-        }
-      ]
-    },
-    {
-      "tag_name": "v1.8.3-beta.3",
-      "name": "MCW Launcher v1.8.3-beta.3",
-      "notes": "Bản thử nghiệm MCW Launcher v1.8.3-beta.3.",
-      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.3-beta.3",
-      "published_at": "2026-10-17T04:16:00Z",
-      "prerelease": true,
-      "draft": false,
-      "assets": [
-        {
-          "name": "MCW-Launcher-v1.8.3-beta.3-windows-x64.zip",
-          "size": 83076486,
-          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.3-beta.3/MCW-Launcher-v1.8.3-beta.3-windows-x64.zip",
-          "mirror_urls": [
-            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.3-beta.3/MCW-Launcher-v1.8.3-beta.3-windows-x64.zip"
-          ]
-        },
-        {
-          "name": "MCW-Launcher-v1.8.3-beta.3-linux-x64.zip",
-          "size": 126879943,
-          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.3-beta.3/MCW-Launcher-v1.8.3-beta.3-linux-x64.zip",
-          "mirror_urls": [
-            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.3-beta.3/MCW-Launcher-v1.8.3-beta.3-linux-x64.zip"
           ]
         }
       ]
