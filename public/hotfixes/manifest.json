@@ -1,8 +1,31 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-10-25T19:15:00Z",
+  "updated_at": "2026-10-27T18:40:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.5",
+      "target_version": "1.8.5.1",
+      "hotfix_id": 1851,
+      "release_tag": "v1.8.5.1",
+      "description": "Hotfix v1.8.5.1: Ưu tiên định tuyến trực tiếp sang Official CurseForge Core API v1 ngay cả khi còn cấu hình Gateway cũ trên máy và bỏ qua truy vấn rỗng trên Gateway cũ.",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.5.1.zip",
+      "sha256": "d985fcfcded3589a6f1513e8d57a49a4a5373b8722b5226e91f4ac93dabdac67",
+      "size_bytes": 16277,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "mcw_core/api/config/curseforge_config_manager.py",
+        "mcw_core/api/curseforge/curseforge_client.py",
+        "mcw_core/api/security/bundled_secrets.py",
+        "mcw_core/api/security/sensitive_data_redactor.py",
+        "src/config.py",
+        "src/core/config/curseforge_config_manager.py",
+        "src/core/curseforge/curseforge_client.py",
+        "src/core/security/bundled_secrets.py",
+        "src/core/security/sensitive_data_redactor.py"
+      ]
+    },
     {
       "base_version": "1.8.3",
       "target_version": "1.8.3.3",
