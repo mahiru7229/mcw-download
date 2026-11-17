@@ -1,8 +1,392 @@
 {
   "schema_version": 1,
   "service": "mcw-releases-network",
-  "updated_at": "2026-10-26T16:00:00Z",
+  "updated_at": "2026-11-16T12:52:20Z",
   "releases": [
+    {
+      "tag_name": "v1.8.7",
+      "name": "MCW Launcher v1.8.7",
+      "notes": "Bản phát hành **MCW Launcher v1.8.7** tập trung vào tự động phát hiện và nâng cấp phiên bản Java cho Mod Fabric/Quilt từ bytecode `.class`, xử lý triệt để lỗi giao diện màn hình chờ `StartupSplash`, cùng các tối ưu hóa cơ sở dữ liệu tài khoản, xác thực OAuth và tiến trình RPC:\r\n\r\n---\r\n\r\n## Các tính năng và cải tiến nổi bật trong v1.8.7\r\n\r\n### 1. Tự động phát hiện phiên bản Java từ Bytecode Mod & Tự nâng cấp khi Recovery\r\n- **Quét Bytecode `.class` và Metadata Mod (`JavaMajorPolicy.required_for_instance`)**:\r\n  - Tự động đọc trường `depends.java` trong `fabric.mod.json` / `quilt.mod.json` và header phiên bản class file `.class` của các mod đang bật (kèm bộ nhớ đệm theo `(path, mtime_ns, size)`).\r\n  - Tự động nâng phiên bản Java yêu cầu (ví dụ các mod MC `1.16.1` biên dịch bằng Java 16 `class file version 60.0` sẽ tự chọn Java 17 thay vì lỗi với Java 8).\r\n- **Mở rộng tùy chọn Java cho người dùng (`allow_higher=True`)**:\r\n  - Cho phép người dùng tự chọn bản Java cao hơn (`17`, `21`, `25`) trên các instance `vanilla`, `fabric`, `quilt`.\r\n- **Trích xuất phiên bản Java từ lỗi `UnsupportedClassVersionError` khi khởi chạy (`JavaRuntime.extract_required_java_major`)**:\r\n  - Nếu game gặp lỗi khởi động `UnsupportedClassVersionError`, bộ phục hồi Java (`MinecraftExecutor._start_with_java_recovery`) tự động phân tích log lỗi và chuyển sang runtime Java cao hơn đáp ứng yêu cầu.\r\n\r\n### 2. Bảo vệ toàn vẹn màn hình khởi động (`StartupSplash`)\r\n- Bọc bảo vệ `try ... except RuntimeError` tại các phương thức cập nhật giao diện (`update_progress`, `retranslate`, `show_error`, `_complete_finish`) để tránh lỗi truy cập đối tượng Qt/C++ đã bị giải phóng khi cửa sổ splash đóng sớm.\r\n\r\n### 3. Tối ưu hóa Cơ sở dữ liệu Tài khoản, Microsoft OAuth & RPC Sidecar\r\n- **Tối ưu kết nối SQLite (`AccountDatabase.connect`)**:\r\n  - Lưu chữ ký kiểm tra DB `(resolved_path, file_size)` trong bộ nhớ để bỏ qua việc chạy lặp lại `PRAGMA quick_check` và kiểm tra schema DDL ở mọi lần mở kết nối mới.\r\n- **Đảm bảo thứ tự khởi tạo cổng trong `MicrosoftOAuth`**:\r\n  - Bind và lắng nghe cổng `127.0.0.1:8400` trên `OAuthCallbackServer` trước khi mở trình duyệt đăng nhập Microsoft, loại bỏ race condition khi trình duyệt phản hồi tức thì.\r\n- **Chống deadlock & Bảo vệ luồng JSON-RPC (`CoreRpcClient` & `StdioRpcServer`)**:\r\n  - Chuyển `stderr` của tiến trình sidecar sang `subprocess.DEVNULL` để tránh deadlock khi đầy pipe 64KB, và điều hướng `sys.stdout` của tiến trình stdio server sang `sys.stderr` để ngăn thư viện ngoài làm hỏng luồng JSON-RPC.",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.7",
+      "published_at": "2026-11-16T12:52:20Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip",
+          "size": 21124733,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip"
+          ],
+          "sha256": "f9d0850305866281ba9e2847adafad1177e3fa1a121310e48e88fea69a1948d1"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip.sha256",
+          "size": 113,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-linux-x64.zip.sha256"
+          ],
+          "sha256": "425a727b8260eb6b30081299eaa29bafec8b5dd9fa900659b36b679e4942ed6c"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip",
+          "size": 11925229,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip"
+          ],
+          "sha256": "8da15b67d716d0070d323c5af1c5350d42330a954ecd36fc39ab014c4b005b09"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip.sha256",
+          "size": 115,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-LegacyBridge-v1.8.7-windows-x64.zip.sha256"
+          ],
+          "sha256": "3ed2649da6dbc6728eaa5f8711832afa0979c69389b0159a3aa9cae825955a3e"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.7-linux-x64.zip",
+          "size": 127081845,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-v1.8.7-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-v1.8.7-linux-x64.zip"
+          ],
+          "sha256": "80d49532ee1dddb3ce9aea18d0f953d29ad9bcfcb24cd0d36b60ac710023a0cb"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.7-linux-x64.zip.sha256",
+          "size": 100,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-v1.8.7-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-v1.8.7-linux-x64.zip.sha256"
+          ],
+          "sha256": "01d5c2633639fffc920e1c0d0cf5c73afc761e3c667f65e5d95fc6de30a6f43c"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.7-windows-x64.zip",
+          "size": 83193103,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-v1.8.7-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-v1.8.7-windows-x64.zip"
+          ],
+          "sha256": "2a609d68bc67ed9f17eb5ba1edeedd7b15010f8c13c0e3227ac12bdbf13833f7"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.7-windows-x64.zip.sha256",
+          "size": 102,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Launcher-v1.8.7-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Launcher-v1.8.7-windows-x64.zip.sha256"
+          ],
+          "sha256": "ce14af29165bc82a7092323ce5488abe57d052d6ff24e1d12dc45ba204092212"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64",
+          "size": 21322688,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Update-Bridge-v1.7.1-linux-x64",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Update-Bridge-v1.7.1-linux-x64"
+          ],
+          "sha256": "9f9b196d52e7aaf347d080a5fb5dc8fc249609ccd144de5306a0a6ce2b9d8044"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "size": 101,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Update-Bridge-v1.7.1-linux-x64.sha256"
+          ],
+          "sha256": "277a68feb5f29e80b13f749192bd369112561553b3a342ca5dc0094362b93a55"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "size": 12189976,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Update-Bridge-v1.7.1-windows-x64.exe"
+          ],
+          "sha256": "2c069706f40b84f1908b3674f5e94aa42518f7e0785a319869fdf39efe32fdff"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "size": 107,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256"
+          ],
+          "sha256": "dba268a930099344b8f4830138a0ecef97a5cf5df82f3517d53491e345ffb1f3"
+        },
+        {
+          "name": "MCW-USE-BRIDGE",
+          "size": 39,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.7/MCW-USE-BRIDGE",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.7/MCW-USE-BRIDGE"
+          ],
+          "sha256": "d60c95829b593fb7e44caefef867db833e2bb1aaf8c008beca31dca31b5bf309"
+        }
+      ]
+    },
+    {
+      "tag_name": "v1.8.6",
+      "name": "MCW Launcher v1.8.6",
+      "notes": "Bản phát hành chính thức **MCW Launcher v1.8.6** tổng hợp toàn bộ kết quả nâng cấp, sửa lỗi chuyên sâu và tối ưu hóa hiệu năng trên cả 3 phân hệ Core Engine, Mạng & Content Pipeline, và Giao diện người dùng:\r\n\r\n---\r\n\r\n## Các tính năng và cải tiến nổi bật trong v1.8.6\r\n\r\n### 1. Sửa dứt điểm lỗi Thanh tiến trình bị kẹt đỏ (\"in vết\") & Hoàn thiện GUI\r\n- **Loại bỏ việc quét ngược lịch sử Task lỗi cũ trong `GlobalTaskIndicator`**:\r\n  - Không còn quét lại danh sách lỗi từ các tác vụ đã kết thúc trước đó trong `TaskQueue`; thanh tiến trình xanh lá 100% của tác vụ mới luôn ghi đè tức thì lên trạng thái lỗi cũ và tự ẩn sau 2.5 giây.\r\n  - Hỗ trợ bấm trực tiếp vào thanh tiến trình để xóa ngay thông báo lỗi.\r\n- **Bảo vệ trạng thái tác vụ chạy chế độ thay thế (`REPLACE`)**:\r\n  - `TaskQueue` tự động bỏ qua các sự kiện kết thúc muộn của thế hệ cũ khi thế hệ mới cùng `task_id` đang hoạt động.\r\n- **Khắc phục lỗi điều khiển Instance & Mod Manager**:\r\n  - Sửa lỗi `NameError` khi buộc dừng game thất bại; bổ sung xử lý lỗi cho toàn bộ tác vụ cài/nhập modpack (`modpack.*`).\r\n  - Hỗ trợ đầy đủ Mod Loader Quilt trong `ModManagerDialog` và hiển thị thông báo cập nhật cho tất cả loader.\r\n  - Kết nối nút \"Quản lý nâng cao\" trong tab Mods và đồng bộ Registry khi gỡ bỏ mod.\r\n  - Tối ưu `ThemedProgressBar` tự ngắt timer xung nhịp 60 FPS khi đứng yên ở 0% hoặc 100% để tiết kiệm CPU.\r\n  - Bảo toàn thiết lập `forge_preflight_failure_policy` khi lưu cài đặt instance.\r\n\r\n### 2. Tối ưu hóa Mạng, CurseForge Official API v1 & Download Pipeline\r\n- **Hoàn thiện kết nối CurseForge Official API v1**:\r\n  - Nhận diện chuẩn xác mã lỗi HTTP (400, 401, 403, 404, 429) và header `Retry-After`; không retry vô ích khi gặp lỗi cố định.\r\n  - Hỗ trợ lọc theo `gameVersion` trực tiếp trên server để không bị giới hạn ở 50 file mới nhất cho các bản Minecraft cũ.\r\n  - Cho phép tìm kiếm mod Fabric cho instance Quilt mà không bị lọc cứng `modLoaderType=5`.\r\n  - Gom các yêu cầu siêu dữ liệu file thành các truy vấn batch 50 file/lần trước khi tải modpack.\r\n- **Tối ưu hóa bộ nhớ đệm (API Cache) & Download**:\r\n  - Loại bỏ hoàn toàn thao tác tính lại dung lượng và ghi đĩa đồng bộ (`os.fsync`) ở mỗi lần đọc cache hit trong `CurseForgeApiCache`, `FTBApiCache` và `ATLauncherApiCache`.\r\n  - Loại bỏ deadlock semaphore trong `DownloadManager` khi chọn file tải thủ công lúc đang tạm dừng tải.\r\n  - Bỏ lượt băm lặp lại khi hit cache tải file và cho phép tải thư viện Maven có `size >= 0`.\r\n  - Sửa lỗi phân trang `FTBClient.search_projects` để mở khóa nút chuyển trang tiếp theo.\r\n  - Tối ưu cập nhật: chỉ fallback sang GitHub khi Cloudflare gặp lỗi mạng; bổ sung cờ `MOVEFILE_COPY_ALLOWED` trong `UpdateApplier` cho Windows.\r\n\r\n### 3. Tăng cường khả năng chịu lỗi Core Engine, Khởi chạy & Bảo mật\r\n- **Bảo vệ toàn vẹn luồng khởi chạy Modpack**:\r\n  - `MinecraftExecutor` bảo lưu đầy đủ ngoại lệ tạm dừng tải và yêu cầu file thủ công (`PortableManualDownloadRequired`, `CurseForgeManagedFilesRequired`, `ModrinthManagedFilesRequired`, `RequiredModDependenciesMissing`), kích hoạt đúng hộp thoại hỗ trợ tải thủ công.\r\n- **Bảo vệ an toàn dữ liệu sao lưu (`InstanceBackupManager`)**:\r\n  - Không xóa thư mục `rollback` khi quá trình khôi phục gặp sự cố, đảm bảo dữ liệu thế giới và mod của người dùng không bao giờ bị xóa nhầm.\r\n- **Nhận diện chính xác tiến trình dừng chủ động (`ProcessSupervisor`)**:\r\n  - Tra cứu lịch sử phiên để phân biệt chính xác giữa người dùng bấm dừng game và trường hợp game bị crash thực sự.\r\n- **Tăng tốc quét Modpack lớn (>300 mods)**:\r\n  - Bổ sung bộ nhớ đệm `(path, mtime, size)` cho `ModManager.read_mod`, quét Jar-in-Jar và băm SHA-1, giảm hàng nghìn thao tác mở file ZIP trước khi vào game.\r\n- **Gia cố bảo mật RPC Server & Thực thi Java**:\r\n  - Chặn `Origin: null`, yêu cầu `Content-Type: application/json` và xả luồng dữ liệu unread trên Windows HTTP RPC Server.\r\n  - Kiểm tra tính hợp lệ của tên file thực thi Java trước khi gọi lệnh kiểm tra phiên bản.\r\n  - Khai báo đầy đủ `argtypes`/`restype` 64-bit cho các hàm Win32 API trong `GameWindowActivator`.",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.6",
+      "published_at": "2026-10-28T12:56:07Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip",
+          "size": 21116809,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip"
+          ],
+          "sha256": "94291fe88ce2b24392cf25361e873c5ceee8cd6d5c8263aa48941f23fa615b5e"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip.sha256",
+          "size": 113,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-linux-x64.zip.sha256"
+          ],
+          "sha256": "4bad9cb92acd18233c1c4dbb82ff8b3025d01b54da50d6cb45157cd22cceffba"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip",
+          "size": 11923814,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip"
+          ],
+          "sha256": "85e080344f4d4c0918995f7b8adbc1cf628ef82243082e463371c2e3b03d6f2c"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip.sha256",
+          "size": 115,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-LegacyBridge-v1.8.6-windows-x64.zip.sha256"
+          ],
+          "sha256": "f16edad3b6df76c33a2b5d133a2feeed0eb54c281ec5331e7b0aef1da663d5c9"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.6-linux-x64.zip",
+          "size": 127036548,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-v1.8.6-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-v1.8.6-linux-x64.zip"
+          ],
+          "sha256": "dacc672d8788b41d99434c2862a854c5c3a25aa721ac8b2385139c3644e14c38"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.6-linux-x64.zip.sha256",
+          "size": 100,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-v1.8.6-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-v1.8.6-linux-x64.zip.sha256"
+          ],
+          "sha256": "fb62797fee08d632b3e4fb882098f1a2c400f9bc43ef5503c997122436b2db03"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.6-windows-x64.zip",
+          "size": 83232953,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-v1.8.6-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-v1.8.6-windows-x64.zip"
+          ],
+          "sha256": "503cc06e5047bf8e106edcba153e8ab50f8c0a2a07a0c95ff665b212b22fc734"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.6-windows-x64.zip.sha256",
+          "size": 102,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Launcher-v1.8.6-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Launcher-v1.8.6-windows-x64.zip.sha256"
+          ],
+          "sha256": "8cfe0876a508470066c7ae878512896a669832bedad94fbfa1c2c75ec9eb8069"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64",
+          "size": 21315928,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Update-Bridge-v1.7.1-linux-x64",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Update-Bridge-v1.7.1-linux-x64"
+          ],
+          "sha256": "75b78ae60d3cecf0c9c83c2445d597cae2deddcee3ff504f911776600af89484"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "size": 101,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Update-Bridge-v1.7.1-linux-x64.sha256"
+          ],
+          "sha256": "baa66aa510b13975d191b3fc46924b621e90649e99ae235f898a0b1b4ff13270"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "size": 12188899,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Update-Bridge-v1.7.1-windows-x64.exe"
+          ],
+          "sha256": "21ac314e7ac24f1f96b214f0c8462db9965d787a7993ad19f2338ce85e971c14"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "size": 107,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256"
+          ],
+          "sha256": "3e91dd24da71ce2caac2ecc99a68b678d11104892b89b7f661e3ea932caa7a2f"
+        },
+        {
+          "name": "MCW-USE-BRIDGE",
+          "size": 39,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.6/MCW-USE-BRIDGE",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.6/MCW-USE-BRIDGE"
+          ],
+          "sha256": "d60c95829b593fb7e44caefef867db833e2bb1aaf8c008beca31dca31b5bf309"
+        }
+      ]
+    },
+    {
+      "tag_name": "v1.8.5",
+      "name": "MCW Launcher v1.8.5",
+      "notes": "Bản phát hành chính thức **MCW Launcher v1.8.5** tích hợp trực tiếp **CurseForge Core API v1** chính thức (được cấp phép bởi đội ngũ Overwolf/CurseForge), giúp người dùng duyệt, tìm kiếm và cài đặt Mod / Modpack CurseForge ngay lập tức mà không cần thiết lập Gateway trung gian; đồng thời mở khóa duyệt danh sách dự án phổ biến không cần từ khóa, tinh gọn trang Cài đặt và tối ưu hóa hiệu năng nền của giao diện:\r\n\r\n---\r\n\r\n## Các tính năng và cải tiến nổi bật trong v1.8.5\r\n\r\n### 1. Tích hợp trực tiếp CurseForge Core API v1 chính thức (`https://api.curseforge.com/v1`)\r\n- **Hoạt động ngay sau khi cài đặt (Out-of-the-box CurseForge Support)**:\r\n  - `CurseForgeClient` kết nối trực tiếp tới hệ thống REST API v1 chính thức của CurseForge (`https://api.curseforge.com/v1/mods/...`) để tìm kiếm dự án, nạp mô tả, kiểm tra danh sách phiên bản theo Mod Loader (`Fabric`, `Quilt`, `Forge`, `NeoForge`) và tải gói cài đặt.\r\n  - Tuân thủ đầy đủ quy chuẩn phân phối bên thứ ba của CurseForge: tự động kiểm tra cờ cho phép tải trực tiếp và chuyển sang hộp thoại hỗ trợ tải thủ công thông minh (`CurseForgeManualDownloadDialog`) đối với các file được tác giả tắt phân phối bên thứ ba (`downloadUrl: null`).\r\n- **Tinh gọn khu vực cấu hình CurseForge trong `LauncherSettingsPage`**:\r\n  - Khai tử giao diện 5 ô nhập địa chỉ Gateway cũ; thay thế bằng **1 ô nhập Khóa API CurseForge cá nhân (tùy chọn)** gọn nhẹ.\r\n  - Người dùng phổ thông trên bản phát hành chính thức có thể để trống hoàn toàn để sử dụng cấu hình tích hợp sẵn của Launcher; người dùng nâng cao hoặc nhà phát triển chạy từ mã nguồn có thể dán khóa API cá nhân (hoặc đặt biến môi trường `MCW_CURSEFORGE_API_KEY`) để sử dụng hạn mức riêng.\r\n  - Gỡ bỏ thông tin mô tả Gateway cũ trên trang `AboutPage`.\r\n\r\n### 2. Duyệt danh sách Mod & Modpack phổ biến trên CurseForge không cần gõ từ khóa\r\n- **Tự động hiển thị các dự án nổi bật ngay khi mở trình duyệt CurseForge**:\r\n  - Loại bỏ rào cản bắt buộc phải nhập từ khóa trước khi tìm kiếm trong `CurseForgeClient.search_projects`, `CurseForgeBrowserDialog` và `ModsPage`.\r\n  - Khi mở hộp thoại tìm Mod / Modpack CurseForge hoặc chuyển sang nguồn CurseForge trên trang `ModsPage`, Launcher tự động nạp ngay danh sách các dự án phổ biến nhất theo phiên bản Minecraft và Mod Loader của Instance hiện tại.\r\n  - Khi người dùng thay đổi bộ lọc Mod Loader trên `CurseForgeBrowserDialog`, danh sách dự án tự động được làm mới tức thì.\r\n\r\n### 3. Sửa lỗi giao diện, Tối ưu hiệu năng Timer nền & Quy trình đóng gói CI\r\n- **Khắc phục lỗi trùng nhãn `\"Forge\"` và mất nhãn `\"Quilt\"` trên `ModsPage`**:\r\n  - Sửa lỗi ánh xạ chỉ mục trong `ModsPage.retranslate_dynamic()` khiến mục số `1` (`Quilt`) bị ghi đè thành `\"Forge\"` sau khi nạp bản dịch ngôn ngữ, đảm bảo 4 tùy chọn `Fabric`, `Quilt`, `Forge` và `NeoForge` luôn hiển thị chính xác ở cả tiếng Việt và tiếng Anh.\r\n- **Tối ưu hóa bộ đếm thời gian chờ làm mới (`_cooldown_timer`)**:\r\n  - Trên `CurseForgeBrowserDialog` và `ModsPage`, bộ đếm `_cooldown_timer` (chu kỳ `1000ms`) không còn chạy ngầm liên tục từ lúc khởi tạo ứng dụng mà chỉ kích hoạt khi người dùng đang trong thời gian chờ làm mới thủ công (`remaining > 0`) và tự động dừng ngay khi bộ đếm về `0`.\r\n- **Đồng bộ cấu hình đóng gói CI (`update-bridge.yml`)**:\r\n  - Cập nhật ràng buộc phiên bản `\"PyInstaller>=6.16,<7\"` trong workflow `.github/workflows/update-bridge.yml` đồng bộ với `pyproject.toml`.\r\n\r\n### 4. Cập nhật Điều khoản Fork & Định danh Dịch vụ bên thứ ba (`LICENSE` & `README.md`)\r\n- **Bổ sung quy định dành cho các bản Fork và tái phân phối**:\r\n  - Cập nhật [`LICENSE`](https://github.com/mahiru7229/mcw-launcher/blob/main/LICENSE) và [`README.md`](https://github.com/mahiru7229/mcw-launcher/blob/main/README.md) để quy định rõ: các khóa API dịch vụ bên thứ ba (bao gồm khóa CurseForge Core API và `MICROSOFT_CLIENT_ID`) cùng chuỗi định danh `User-Agent` (`mahiru7229/mcw-launcher`) thuộc định danh riêng của dự án **MCW Launcher** chính thức. Mọi bản fork hoặc phân phối lại bắt buộc phải tự đăng ký khóa API và thay đổi tên/định danh riêng.",
+      "html_url": "https://github.com/mahiru7229/mcw-launcher/releases/tag/v1.8.5",
+      "published_at": "2026-10-27T14:08:31Z",
+      "prerelease": false,
+      "draft": false,
+      "assets": [
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip",
+          "size": 21117155,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip"
+          ],
+          "sha256": "54f9f6023180d2f03bcc880ddaf33972911ea4897bb24a06faf5f7aa494eef5e"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip.sha256",
+          "size": 113,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-linux-x64.zip.sha256"
+          ],
+          "sha256": "e6ec7e6621db8583e10ece8540fc165d1de17fec2cab8463dd04b31f7d0c4fe7"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip",
+          "size": 11924093,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip"
+          ],
+          "sha256": "2525c564185b38e24a7f1e9dc285f6859e33074c494037d23e353f930a0645ad"
+        },
+        {
+          "name": "MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip.sha256",
+          "size": 115,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-LegacyBridge-v1.8.5-windows-x64.zip.sha256"
+          ],
+          "sha256": "d3aab8366c0514980a8db832745ba8c5c8078c6899beb0641f036a5f9fec7e53"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.5-linux-x64.zip",
+          "size": 127025821,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-v1.8.5-linux-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-v1.8.5-linux-x64.zip"
+          ],
+          "sha256": "5210aded1f120693868bebe64378f881bba9293af9e7094897847c5986d29843"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.5-linux-x64.zip.sha256",
+          "size": 100,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-v1.8.5-linux-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-v1.8.5-linux-x64.zip.sha256"
+          ],
+          "sha256": "1836e4bf3d1ac73ccde8fbb77287ff1b53c6d0d6548d66b4b8975a87210de815"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.5-windows-x64.zip",
+          "size": 83221761,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-v1.8.5-windows-x64.zip",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-v1.8.5-windows-x64.zip"
+          ],
+          "sha256": "754fc6c35b575f35a42e3de6c6e53ab1f6d9cd0f7f0dba0ee0df202e2007b52b"
+        },
+        {
+          "name": "MCW-Launcher-v1.8.5-windows-x64.zip.sha256",
+          "size": 102,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Launcher-v1.8.5-windows-x64.zip.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Launcher-v1.8.5-windows-x64.zip.sha256"
+          ],
+          "sha256": "4c338b9c06909081683d45b53dfe770a3092e9312ac708d517b5ab4eb5e64efd"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64",
+          "size": 21316288,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Update-Bridge-v1.7.1-linux-x64",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Update-Bridge-v1.7.1-linux-x64"
+          ],
+          "sha256": "d2434405fbbb47d2def4cf56354ec6f71ac183ead4b9a12e51d303eeaa3312bb"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "size": 101,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Update-Bridge-v1.7.1-linux-x64.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Update-Bridge-v1.7.1-linux-x64.sha256"
+          ],
+          "sha256": "d3940dea736c7e709042a6af7d01a54fbdfdf7b8292077d4f16ebb92298dff80"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "size": 12189513,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Update-Bridge-v1.7.1-windows-x64.exe",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Update-Bridge-v1.7.1-windows-x64.exe"
+          ],
+          "sha256": "9c96af04b55a8c62eb9fc1955d3a08d7bb91e332227145bb6c577055f3d82cb9"
+        },
+        {
+          "name": "MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "size": 107,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-Update-Bridge-v1.7.1-windows-x64.exe.sha256"
+          ],
+          "sha256": "702b3eaa66d661e4f8ed23de81935779e4f449e6ba09d8126f3226ed66518e53"
+        },
+        {
+          "name": "MCW-USE-BRIDGE",
+          "size": 39,
+          "browser_download_url": "https://mcw-download.pages.dev/releases/v1.8.5/MCW-USE-BRIDGE",
+          "mirror_urls": [
+            "https://github.com/mahiru7229/mcw-launcher/releases/download/v1.8.5/MCW-USE-BRIDGE"
+          ],
+          "sha256": "d60c95829b593fb7e44caefef867db833e2bb1aaf8c008beca31dca31b5bf309"
+        }
+      ]
+    },
     {
       "tag_name": "v1.8.4",
       "name": "MCW Launcher v1.8.4",
