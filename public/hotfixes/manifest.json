@@ -1,8 +1,25 @@
 {
   "schema_version": 1,
   "service": "mcw-hotfix-network",
-  "updated_at": "2026-11-17T02:38:00Z",
+  "updated_at": "2026-11-17T02:44:00Z",
   "active_hotfixes": [
+    {
+      "base_version": "1.8.7",
+      "target_version": "1.8.7.1",
+      "hotfix_id": 1871,
+      "release_tag": "v1.8.7.1",
+      "description": "Hotfix v1.8.7.1: Khắc phục lỗi kiểm tra cập nhật trên kênh Stable không tự động chuyển dự phòng sang GitHub API khi Cloudflare CDN trả về rỗng.",
+      "enabled": true,
+      "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.7.1.zip",
+      "sha256": "66e6492b71c1aa1996f2e9006b34d4ab40e06d9a893270e14f57037c78876e2b",
+      "size_bytes": 6935,
+      "clean_on_upgrade": true,
+      "target_modules": [
+        "mcw_core/api/update/update_manager.py",
+        "src/config.py",
+        "src/core/update/update_manager.py"
+      ]
+    },
     {
       "base_version": "1.8.6",
       "target_version": "1.8.6.1",
@@ -11,7 +28,7 @@
       "description": "Hotfix v1.8.6.1: Khắc phục lỗi kiểm tra cập nhật trên kênh Stable không tự động chuyển dự phòng sang GitHub API khi Cloudflare CDN trả về rỗng.",
       "enabled": true,
       "download_url": "https://mcw-download.pages.dev/hotfixes/v1.8.6.1.zip",
-      "sha256": "a7dd38f70e6a9e01c0b319b68b907e169a563b3aaed5e65a4d7b46e4ccae6973",
+      "sha256": "9ecb22a40cb78d5506b161a6708d147206af996e0474c9f5f77dfcdf6cff8ac5",
       "size_bytes": 6935,
       "clean_on_upgrade": true,
       "target_modules": [
